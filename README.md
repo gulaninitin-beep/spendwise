@@ -2,7 +2,7 @@
 
 Built by **Nitin Gulani** for the **Generative AI Assessment Track (Data & Dashboards)**.
 
-**Live Demo:** https://gulaninitin-beep.github.io/spendwise/
+**Live Demo:** https://spendwise-rho-one.vercel.app/
 
 **GitHub Repository:** https://github.com/gulaninitin-beep/spendwise
 
