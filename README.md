@@ -28,12 +28,13 @@ Users can add, edit, and delete expenses, view monthly transactions, monitor the
 - [x] Supabase integration for authentication and data storage
 - [x] Responsive dashboard interface
 
+<img width="2202" height="3470" alt="localhost_3000_" src="https://github.com/user-attachments/assets/ba75bbe4-7acd-494d-b794-959586111fd6" />
+
 ## Key Learning Outcomes
 
 - Building an interactive web application using HTML, CSS, JavaScript and Generative AI
 - Connecting a frontend application to a backend service
-- Implementing user authentication and database operations<img width="2202" height="3470" alt="localhost_3000_" src="https://github.com/user-attachments/assets/ba75bbe4-7acd-494d-b794-959586111fd6" />
-
+- Implementing user authentication and database operations
 - Using Generative AI assistance during application development and debugging
 
 ## Tech Stack
