@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SpendWise — Expense Tracker</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main id="auth-screen" class="auth-shell">
+    <section class="auth-card">
+      <div class="brand"><span class="brand-mark">S</span><span>SpendWise</span></div>
+      <p class="eyebrow">YOUR MONEY, MADE CLEAR</p>
+      <h1 id="auth-title">Welcome back</h1>
+      <p class="muted" id="auth-subtitle">Sign in to see where your money goes.</p>
+      <form id="auth-form">
+        <label>Email address<input id="auth-email" type="email" autocomplete="email" placeholder="you@example.com" required></label>
+        <label>Password<input id="auth-password" type="password" autocomplete="current-password" minlength="6" placeholder="At least 6 characters" required></label>
+        <button class="primary full" id="auth-submit" type="submit">Sign in</button>
+      </form>
+      <p id="auth-message" class="message" role="status"></p>
+      <p class="auth-switch"><span id="auth-switch-text">New to SpendWise?</span> <button class="text-button" id="auth-switch" type="button">Create an account</button></p>
+      <p class="tiny muted">Your data is stored securely in your Supabase account.</p>
+    </section>
+  </main>
+
+  <main id="app-screen" class="app-shell hidden">
+    <aside class="sidebar">
+      <a class="brand" href="#"><span class="brand-mark">S</span><span>SpendWise</span></a>
+      <p class="side-label">WORKSPACE</p>
+      <button class="nav-item active" type="button"><span>▦</span> Overview</button>
+      <button class="nav-item" id="history-nav" type="button"><span>↻</span> Transactions</button>
+      <div class="sidebar-bottom">
+        <div class="mini-profile"><div class="avatar" id="avatar">U</div><div class="profile-copy"><strong id="profile-email">Signed in</strong><small>Personal account</small></div></div>
+        <button class="nav-item signout" id="signout-button" type="button"><span>↪</span> Sign out</button>
+      </div>
+    </aside>
+
+    <section class="main-content">
+      <header class="topbar">
+        <div><p class="eyebrow">PERSONAL FINANCE</p><h1>Overview</h1></div>
+        <div class="top-actions"><span class="date-chip" id="today-label"></span><button class="primary" id="add-expense-top" type="button">＋ Add expense</button></div>
+      </header>
+
+      <section class="welcome-row">
+        <div><h2>Good to see you <span class="wave">✦</span></h2><p class="muted">Here's how your money is looking this month.</p></div>
+        <label class="month-picker">Month <input id="month-picker" type="month"></label>
+      </section>
+
+      <section class="stats-grid">
+        <article class="stat-card budget-card"><div class="stat-top"><span>Monthly budget</span><span class="stat-icon">◎</span></div><p class="stat-value" id="budget-value">₹0</p><div class="inline-edit"><button id="edit-budget-button" class="text-button" type="button">Set monthly budget ↗</button></div></article>
+        <article class="stat-card"><div class="stat-top"><span>Total spent</span><span class="stat-icon coral">↗</span></div><p class="stat-value" id="spent-value">₹0</p><p class="stat-foot" id="spent-caption">Across all expenses this month</p></article>
+        <article class="stat-card"><div class="stat-top"><span>Remaining</span><span class="stat-icon mint">⌁</span></div><p class="stat-value" id="remaining-value">₹0</p><div class="progress-track"><div id="budget-progress" class="progress-fill"></div></div><p class="stat-foot" id="budget-caption">Set a budget to track progress</p></article>
+        <article class="stat-card"><div class="stat-top"><span>Today's spending</span><span class="stat-icon lilac">◷</span></div><p class="stat-value" id="today-value">₹0</p><p class="stat-foot" id="today-count">0 transactions today</p></article>
+      </section>
+
+      <div id="budget-alert" class="budget-alert hidden"></div>
+
+      <section class="content-grid">
+        <article class="panel chart-panel">
+          <div class="panel-heading"><div><h3>Spending breakdown</h3><p class="muted">By category this month</p></div><span class="panel-badge">This month</span></div>
+          <div class="chart-area"><div class="donut-wrap"><div id="donut-chart" class="donut"><div class="donut-center"><strong id="donut-total">₹0</strong><span>Total spent</span></div></div></div><div id="category-legend" class="legend"><p class="muted">Add expenses to see your breakdown.</p></div></div>
+        </article>
+
+        <article class="panel today-panel">
+          <div class="panel-heading"><div><h3>Today's expenses</h3><p class="muted" id="today-date-full">Your activity today</p></div><button class="text-button" id="see-all" type="button">See all →</button></div>
+          <div id="today-list" class="transaction-list"><div class="empty-state">No expenses today yet.</div></div>
+          <div class="today-total"><span>Today's total</span><strong id="today-total">₹0</strong></div>
+        </article>
+      </section>
+
+      <section class="panel transactions-panel" id="transactions-section">
+        <div class="panel-heading"><div><h3>Recent transactions</h3><p class="muted">Your latest recorded expenses</p></div><button class="outline" id="export-button" type="button">↓ Export CSV</button></div>
+        <div class="table-wrap"><table><thead><tr><th>Expense</th><th>Category</th><th>Date</th><th class="right">Amount</th><th></th></tr></thead><tbody id="transactions-body"><tr><td colspan="5" class="empty-state">No expenses yet. Add your first expense!</td></tr></tbody></table></div>
+      </section>
+      <footer>SpendWise <span>·</span> Small steps toward better money habits.</footer>
+    </section>
+  </main>
+
+  <dialog id="expense-dialog" class="modal">
+    <form id="expense-form" method="dialog">
+      <div class="modal-heading"><div><p class="eyebrow">TRANSACTION</p><h2 id="expense-modal-title">Add expense</h2></div><button class="close-button" type="button" data-close="expense-dialog" aria-label="Close">×</button></div>
+      <label>Expense name<input id="expense-name" maxlength="100" placeholder="e.g. Groceries, milk, subscription" required></label>
+      <div class="form-row"><label>Amount (₹)<input id="expense-amount" type="number" min="0.01" step="0.01" placeholder="0.00" required></label><label>Date<input id="expense-date" type="date" required></label></div>
+      <label>Category<select id="expense-category" required><option value="Food & Drink">Food &amp; Drink</option><option value="Groceries">Groceries</option><option value="Transport">Transport</option><option value="Shopping">Shopping</option><option value="Bills">Bills</option><option value="Health">Health</option><option value="Education">Education</option><option value="Entertainment">Entertainment</option><option value="Subscriptions">Subscriptions</option><option value="Other">Other</option></select></label>
+      <p id="expense-error" class="message error" role="status"></p>
+      <div class="modal-actions"><button class="outline" type="button" data-close="expense-dialog">Cancel</button><button class="primary" id="save-expense" type="submit">Save expense</button></div>
+    </form>
+  </dialog>
+
+  <dialog id="budget-dialog" class="modal small-modal">
+    <form id="budget-form" method="dialog">
+      <div class="modal-heading"><div><p class="eyebrow">MONTHLY PLAN</p><h2>Set your budget</h2></div><button class="close-button" type="button" data-close="budget-dialog" aria-label="Close">×</button></div>
+      <p class="muted">Choose the total amount you want to spend this month.</p>
+      <label>Monthly budget (₹)<input id="budget-input" type="number" min="0" step="0.01" placeholder="e.g. 15000" required></label>
+      <p id="budget-error" class="message error" role="status"></p>
+      <div class="modal-actions"><button class="outline" type="button" data-close="budget-dialog">Cancel</button><button class="primary" type="submit">Save budget</button></div>
+    </form>
+  </dialog>
+
+  <div id="toast" class="toast" role="status"></div>
+  <script type="module" src="app.js"></script>
+</body>
+</html>
